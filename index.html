@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Veille cybersécurité NIS2</title>
+<style>
+body { font-family: Arial; margin: 20px; }
+.item { padding: 10px; border-bottom: 1px solid #ddd; }
+.title { font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h2>Veille cybersécurité (NIS2)</h2>
+<div id="feed">Chargement...</div>
+
+<script>
+const feeds = [
+  "https://www.cert.ssi.gouv.fr/alerte/feed",
+  "https://www.it-connect.fr/feed/",
+  "https://www.cnil.fr/fr/rss.xml",
+  "https://www.zdnet.fr/feeds/rss/actualites/",
+  "https://www.lemondeinformatique.fr/flux-rss/rss.xml"
+];
+
+async function loadFeeds() {
+  const container = document.getElementById("feed");
+  container.innerHTML = "";
+
+  for (let url of feeds) {
+    const proxy = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(url);
+
+    try {
+      const res = await fetch(proxy);
+      const data = await res.json();
+
+      (data.items || []).forEach(item => {
+        const text = (item.title + " " + item.description).toLowerCase();
+
+        // filtre simple NIS2 / cyber
+        if (
+          text.includes("cyber") ||
+          text.includes("vuln") ||
+          text.includes("sécurité") ||
+          text.includes("nis2")
+        ) {
+          const div = document.createElement("div");
+          div.className = "item";
+          div.innerHTML = `
+            <div class="title">${item.title}</div>
+            <a href="${item.link}" target="_blank">Lire</a>
+          `;
+          container.appendChild(div);
+        }
+      });
+
+    } catch (e) {
+      console.log("Erreur feed:", url);
+    }
+  }
+}
+
+loadFeeds();
+</script>
+
+</body>
+</html>
