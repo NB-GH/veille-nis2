@@ -19,7 +19,7 @@
 <div id="rss"></div>
 <script>
   let feeds = [
-  "https://www.bleepingcomputer.com/feed/",
+  // "https://www.bleepingcomputer.com/feed/",
   "https://www.cnil.fr/rss.xml",
   "https://www.zdnet.fr/feeds/rss/securite/",
   "https://www.it-connect.fr/feed/",
@@ -58,18 +58,18 @@ function isRelevant(item) {
   );
 }
 
+let loaded = 0;
+
 function loadFeeds() {
   document.getElementById("rss").innerHTML = "";
   allArticles = [];
   displayed = 0;
-
-  feeds = feeds.filter(f => f.trim() !== "");
+  loaded = 0;
 
   feeds.forEach(feed => {
     fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`)
       .then(res => res.json())
       .then(data => {
-
         data.items.forEach(item => {
           if (isRelevant(item)) {
             item.source = getSource(item.link);
@@ -77,9 +77,12 @@ function loadFeeds() {
           }
         });
 
-        allArticles.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+        loaded++;
 
-        displayArticles();
+        if (loaded === feeds.length) {
+          allArticles.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+          displayArticles();
+        }
       });
   });
 }
