@@ -1,17 +1,16 @@
 const feeds = [
+  "https://www.bleepingcomputer.com/feed/",
   "https://www.cnil.fr/rss.xml",
   "https://www.zdnet.fr/feeds/rss/securite/",
   "https://www.it-connect.fr/feed/",
   "https://www.lemondeinformatique.fr/flux-rss/rss.xml",
-  "https://owasp.org/www-project-top-ten/",
-  "https://digital-strategy.ec.europa.eu/en/policies/nis2-directive"
 ];
 
 let allArticles = [];
 let displayed = 0;
 
 function getSource(url) {
-  if (url.includes("ssi.gouv")) return "CERT-FR";
+  if (url.includes("bleepingcomputer")) return "Bleeping Computer";
   if (url.includes("cnil")) return "CNIL";
   if (url.includes("zdnet")) return "ZDNet";
   if (url.includes("it-connect")) return "IT-Connect";
@@ -43,6 +42,8 @@ function loadFeeds() {
   document.getElementById("rss").innerHTML = "";
   allArticles = [];
   displayed = 0;
+
+  feeds = feeds.filter(f => f.trim() !== "");
 
   feeds.forEach(feed => {
     fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`)
