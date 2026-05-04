@@ -66,6 +66,8 @@ function loadFeeds() {
   displayed = 0;
   loaded = 0;
 
+  feeds = feeds.filter(f => f.trim() !== "");
+  
   feeds.forEach(feed => {
     fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`)
       .then(res => res.json())
