@@ -52,32 +52,37 @@ function isRelevant(item) {
     text.includes("entreprise") ||
     text.includes("cloud") ||
     text.includes("incident") ||
+    text.includes("compliance") ||
     text.includes("réglementation") ||
-    text.includes("europe") ||
-    text.includes("anssi")
+    text.includes("europe")
   );
 }
 
-let loaded = 0;
 
 function loadFeeds() {
   document.getElementById("rss").innerHTML = "";
   allArticles = [];
   displayed = 0;
-  loaded = 0;
+  let loaded = 0;
 
   feeds = feeds.filter(f => f.trim() !== "");
-  
+
   feeds.forEach(feed => {
+
     fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`)
       .then(res => res.json())
       .then(data => {
-        data.items.forEach(item => {
-          if (isRelevant(item)) {
-            item.source = getSource(item.link);
-            allArticles.push(item);
-          }
-        });
+
+        if (data && data.items && Array.isArray(data.items)) {
+
+          data.items.forEach(item => {
+            if (isRelevant(item)) {
+              item.source = getSource(item.link);
+              allArticles.push(item);
+            }
+          });
+
+        }
 
         loaded++;
 
@@ -85,7 +90,13 @@ function loadFeeds() {
           allArticles.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
           displayArticles();
         }
+
+      })
+      .catch(err => {
+        loaded++;
+        console.log("Erreur feed:", feed);
       });
+
   });
 }
 
