@@ -2,14 +2,14 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Veille NIS2</title>
+<title>Flux NIS2</title>
 <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<h2>Veille technologique — Directive NIS2</h2>
+<h2>Flux RSS — Directive NIS2</h2>
 
 <div id="controls">
   <button onclick="loadFeeds()">Actualiser</button>
@@ -41,17 +41,17 @@ function isRelevant(item) {
   const text = (item.title + item.description).toLowerCase();
 
   return (
-    text.includes("nis2") ||
-    text.includes("cyber") ||
-    text.includes("sécurité") ||
+    text.includes("nis") ||
+    //text.includes("cyber") ||
+    //text.includes("sécurité") ||
     text.includes("directive") ||
     text.includes("anssi") ||
     text.includes("rgpd") ||
-    text.includes("attaque") ||
-    text.includes("entreprise") ||
-    text.includes("cloud") ||
-    text.includes("incident") ||
-    text.includes("compliance") ||
+    //text.includes("attaque") ||
+    //text.includes("entreprise") ||
+    //text.includes("cloud") ||
+    //text.includes("incident") ||
+    //text.includes("compliance") ||
     text.includes("réglementation") ||
     text.includes("europe")
   );
