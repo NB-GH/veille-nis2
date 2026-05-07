@@ -23,6 +23,7 @@
   "https://www.zdnet.com/news/rss.xml",
   "https://www.it-connect.fr/feed/",
   "https://www.lemondeinformatique.fr/flux-rss/rss.xml",
+  "https://www.bleepingcomputer.com/feed/"
 ];
 
 let allArticles = [];
@@ -46,13 +47,13 @@ function isRelevant(item) {
     //text.includes("sécurité") ||
     text.includes("directive") ||
     text.includes("anssi") ||
-    text.includes("rgpd") ||
+    //text.includes("rgpd") ||
     //text.includes("attaque") ||
     //text.includes("entreprise") ||
     //text.includes("cloud") ||
     //text.includes("incident") ||
     //text.includes("compliance") ||
-    text.includes("réglementation") ||
+    //text.includes("réglementation") ||
     text.includes("europe")
   );
 }
