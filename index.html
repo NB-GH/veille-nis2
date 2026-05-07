@@ -39,10 +39,14 @@ function getSource(url) {
 }
 
 function isRelevant(item) {
-  const text = (item.title + item.description).toLowerCase();
+  const text = (item.title + " " + item.description).toLowerCase();
 
   return (
-    text.includes("nis") ||
+    /nis\s*1|nis\s*2|\bnis\b/.test(texte) ||
+    /directive.*nis/.test(text) ||
+    text.includes("cybersécurité") ||
+    text.includes("cyber attack") ||
+    //text.includes("vulnérabilité") ||
     //text.includes("cyber") ||
     //text.includes("sécurité") ||
     text.includes("directive") ||
