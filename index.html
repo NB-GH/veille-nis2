@@ -20,7 +20,7 @@
 <script>
   let feeds = [
   "https://www.cnil.fr/rss.xml",
-  "https://www.zdnet.com/news/rss.xml",
+  "https://www.zdnet.com/topic/security/rss.xml",
   "https://www.it-connect.fr/feed/",
   "https://www.lemondeinformatique.fr/flux-rss/rss.xml",
   "https://www.bleepingcomputer.com/feed/"
@@ -42,10 +42,10 @@ function isRelevant(item) {
   const text = (item.title + " " + item.description).toLowerCase();
 
   return (
-    /nis\s*1|nis\s*2|\bnis\b/.test(texte) ||
+    /nis\s*1|nis\s*2|\bnis\b/.test(text) ||
     /directive.*nis/.test(text) ||
     text.includes("cybersécurité") ||
-    text.includes("cyber attack") ||
+    text.includes("cyber attaque") ||
     //text.includes("vulnérabilité") ||
     //text.includes("cyber") ||
     //text.includes("sécurité") ||
